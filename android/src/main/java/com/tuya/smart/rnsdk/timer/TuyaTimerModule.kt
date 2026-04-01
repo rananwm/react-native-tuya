@@ -162,7 +162,7 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
             }
 
             override fun onError(code: String?, error: String?) {
-                promise.reject(code, error)
+                promise.reject(code ?: "ERROR", error ?: "Unknown error")
             }
         }
     }
@@ -173,7 +173,7 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
             }
 
             override fun onError(code: String?, error: String?) {
-                promise.reject(code, error)
+                promise.reject(code ?: "ERROR", error ?: "Unknown error")
             }
         }
     }
@@ -184,7 +184,7 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
             }
 
             override fun onError(code: String?, error: String?) {
-                promise.reject(code, error)
+                promise.reject(code ?: "ERROR", error ?: "Unknown error")
             }
         }
     }
@@ -196,7 +196,7 @@ class TuyaTimerModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
             }
 
             override fun onError(code: String?, error: String?) {
-                promise.reject(code, error)
+                promise.reject(code ?: "ERROR", error ?: "Unknown error")
             }
         }
     }

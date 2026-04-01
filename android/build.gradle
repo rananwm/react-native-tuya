@@ -8,7 +8,7 @@ buildscript {
     repositories {
 
         maven{url 'https://maven.aliyun.com/nexus/content/groups/public/'}
-        jcenter()
+        mavenCentral()
         google()
     }
 
@@ -20,11 +20,11 @@ buildscript {
 
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 36
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion 24
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
 
@@ -61,7 +61,7 @@ repositories {
         url "$projectDir/../node_modules/react-native/android"
     }
 
-    jcenter()
+
     maven { url 'https://maven-other.tuya.com/repository/maven-releases/' }
     maven { url "https://maven-other.tuya.com/repository/maven-commercial-releases/" }
     maven { url 'https://jitpack.io' }

@@ -1,5 +1,6 @@
 package com.tuya.smart.rnsdk.activator
 
+import android.app.Activity
 import android.content.Intent
 import android.provider.Settings
 import com.facebook.react.bridge.*
@@ -106,7 +107,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) :
                     }
 
                     override fun onFailure(code: Int, msg: String?, handle: Any?) {
-                      promise.reject(code.toString(), msg);
+                      promise.reject(code.toString(), msg ?: "")
                     }
                   });
               }
@@ -162,7 +163,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) :
 
           override fun onFailure(code: Int, msg: String?, handle: Any?) {
             Log.e("TuyaActivatorModule", code.toString() + msg.toString());
-            promise.reject(code.toString(), msg);
+            promise.reject(code.toString(), msg ?: "");
           }
         });
     }
@@ -185,15 +186,20 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun openNetworkSettings(params: ReadableMap) {
-    val currentActivity = currentActivity
-    if (currentActivity == null) {
-      return
+    val activity: Activity? = getCurrentActivity()
+    if (activity != null) {
+      try {
+        activity.startActivity(Intent(Settings.ACTION_SETTINGS))
+      } catch (e: Exception) {
+      }
+    } else {
+      try {
+        val intent = Intent(Settings.ACTION_SETTINGS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        reactApplicationContext.startActivity(intent)
+      } catch (e: Exception) {
+      }
     }
-    try {
-      currentActivity.startActivity(Intent(Settings.ACTION_SETTINGS))
-    } catch (e: Exception) {
-    }
-
   }
 
   @ReactMethod
@@ -206,7 +212,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) :
           }
 
           override fun onFailure(errorCode: String?, errorMsg: String?) {
-            promise.reject(errorCode, errorMsg);
+            promise.reject(errorCode ?: "ERROR", errorMsg ?: "Unknown error");
           }
         })
     }
@@ -227,7 +233,7 @@ class TuyaActivatorModule(reactContext: ReactApplicationContext) :
           override fun onQRCodeSuccess(qrcodeUrl: String?) {}
 
           override fun onError(errorCode: String?, errorMsg: String?) {
-            promise.reject(errorCode, errorMsg);
+            promise.reject(errorCode ?: "ERROR", errorMsg ?: "Unknown error");
           }
         });
 
