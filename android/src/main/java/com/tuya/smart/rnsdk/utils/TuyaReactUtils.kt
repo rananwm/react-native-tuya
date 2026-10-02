@@ -35,6 +35,9 @@ object TuyaReactUtils {
                         // Long型支持，如果数字大于int, 且是整数,转化成long
                         if (value > Integer.MAX_VALUE && value % 1 == 0.0) {
                             deconstructedMap[key] = value.toLong()
+                        } else if (value % 1 == 0.0 && value >= Integer.MIN_VALUE) {
+                            // JS numbers all arrive as doubles, and publishDps rejects 6.0 for a value dp
+                            deconstructedMap[key] = value.toInt()
                         } else {
                             deconstructedMap[key] = value
                         }
@@ -97,6 +100,8 @@ object TuyaReactUtils {
                         // Long型支持，如果数字大于int, 且是整数,转化成long
                         if (value > Integer.MAX_VALUE && value % 1 == 0.0) {
                             deconstructedList.add(i, value.toLong())
+                        } else if (value % 1 == 0.0 && value >= Integer.MIN_VALUE) {
+                            deconstructedList.add(i, value.toInt())
                         } else {
                             deconstructedList.add(i, value)
                         }
